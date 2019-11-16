@@ -1,0 +1,3 @@
+august: auguest
+nowadays: nowdays
+library: liabrary
