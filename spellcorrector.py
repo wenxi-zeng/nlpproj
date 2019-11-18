@@ -1,5 +1,5 @@
 import re
-
+import pickle
 import ngram
 from queue import Queue
 
@@ -107,16 +107,34 @@ def evaluate(corrected, gold):
     return precision, recall, f_measure
 
 
-def main():
-    model = ngram.create_ngramlm(3, 'big.txt')
+def save_model(obj, filename):
+    with open(filename, 'wb') as output:
+        pickle.dump(obj, output)
 
-    test_text = ngram.load_text('data.txt')
+
+def load_model(filename):
+    with open(filename, 'rb') as input:
+        return pickle.load(input)
+
+
+def create_and_save_model(src_file, model_file, n):
+    model = ngram.create_ngramlm(n, src_file)
+    save_model(model, model_file)
+
+
+def run(model, datafn, labelfn):
+    test_text = ngram.load_text(datafn)
     sentences = ngram.split_sentence(test_text)
     corrected = check(model, sentences)
 
     print(corrected)
-    gold = load_test('label.txt')
+    gold = load_test(labelfn)
     print(evaluate(corrected, gold))
+
+
+def main():
+    model = ngram.create_ngramlm(3, 'big.txt')
+    run(model, 'data.txt', 'label.txt')
 
     pass
 
