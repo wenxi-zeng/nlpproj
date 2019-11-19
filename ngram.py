@@ -1,10 +1,5 @@
-import os.path
-import sys
-import nltk
-import numpy as np
 import re
-from nltk.tokenize import sent_tokenize
-from math import log, exp
+from math import log
 import random
 
 random.seed(1)

@@ -1,5 +1,7 @@
 import re
 import pickle
+import sys
+
 import ngram
 from queue import Queue
 
@@ -132,12 +134,17 @@ def run(model, datafn, labelfn):
     print(evaluate(corrected, gold))
 
 
-def main():
-    model = ngram.create_ngramlm(3, 'big.txt')
-    run(model, 'data.txt', 'label.txt')
+def main(args):
+    if len(args) != 4:
+        print("Invalid arguments, try:\n"
+              "     spellcorrector.py <ngram> <corpus> <data file> <label file>")
+        return
+
+    model = ngram.create_ngramlm(int(args[0]), args[1])
+    run(model, args[2], args[3])
 
     pass
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

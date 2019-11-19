@@ -1,3 +1,4 @@
+import sys
 from xml.dom import minidom
 from xml.dom.minidom import Text
 import os
@@ -57,10 +58,15 @@ def handle_tag_i(i):
     return result.strip()
 
 
-def main():
-    parse_all_to_file(r'dataset/test', 'data.txt')
+def main(args):
+    if len(args) != 2:
+        print("Invalid arguments, try:\n"
+              "     preprocessor.py <src dataset directory> <output data file>")
+        return
+
+    parse_all_to_file(args[0], args[1])
     pass
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
